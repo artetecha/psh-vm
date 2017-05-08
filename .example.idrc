@@ -1,0 +1,6 @@
+# Please copy this to .idrc within the same directory
+# and edit the following variables to match your Git(hub) identity,
+# before you run the first 'vagrant up'.
+
+NAME="Pinco Pallo"
+EMAIL="pinco@pallo.com"

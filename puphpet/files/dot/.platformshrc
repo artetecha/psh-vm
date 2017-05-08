@@ -1,0 +1,2 @@
+# Custom Solas p.sh configuration variables.
+alias platform-update='sudo /vagrant/puphpet/files/exec-once/install-platform-cli.sh && platform self:install -y -q'

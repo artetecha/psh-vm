@@ -1,0 +1,62 @@
+# Packages.
+*.7z
+*.dmg
+*.gz
+*.bz2
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+*.tgz
+
+# Logs and databases.
+*.log
+*.sql
+*.sqlite
+
+# Ignore VI generated files.
+*swp
+*swo
+*.un~
+
+# OS generated files.
+.DS_Store*
+ehthumbs.db
+.settings
+Icon?
+Thumbs.db
+._*
+*~
+
+# Ignore Compass/SASS files.
+.sass-cache
+.sass-cache/*
+Guardfile
+.Guardfile
+
+# Ignore custom files.
+.github-integration-active
+
+# Ignore IDEs project directories.
+.idea
+.project
+.settings
+*.bbprojectd
+*.sublime-project
+*.sublime-workspace
+*.tmproj
+*.pbxuser
+*.perspective
+*.perspectivev3
+*.mode1v3
+*.mode2v3
+*.swp
+*~.nib
+nbproject
+.komodotools
+.komodoproject
+.buildpath
+
+# Ignore MacFuse hidden files
+.apdisk

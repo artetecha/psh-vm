@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Prevents pushing
+
+PROTECTED_BRANCHES="^(master|stage|qa)"
+SUPER_USERS="^(v@artetecha.com)"
+
+while read LOCAL_REF LOCAL_SHA REMOTE_REF REMOTE_SHA
+do
+  REMOTE_BRANCH=$(echo ${REMOTE_REF} | sed -e 's,.*/\(.*\),\1,')
+  USER=$(git config --list | grep user.email | cut -d "=" -f 2)
+  if [[ "${REMOTE_BRANCH}" =~ $PROTECTED_BRANCHES && !("${USER}" =~ ${SUPER_USERS}) ]]; then
+    echo
+    echo "Sorry, you are not authorised to push to ${REMOTE_BRANCH}."
+    exit 1 # Disallow push.
+  fi
+done
+
+# Allows push.
+exit 0

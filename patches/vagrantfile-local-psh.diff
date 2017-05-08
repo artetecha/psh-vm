@@ -1,0 +1,57 @@
+--- /Users/vincenzo/Downloads/XeqhAt/puphpet/vagrant/Vagrantfile-local	2016-11-20 09:48:16.000000000 +0000
++++ puphpet/vagrant/Vagrantfile-local	2016-11-21 14:57:28.000000000 +0000
+@@ -205,6 +205,16 @@
+             type: 'rsync',
+             group: sync_group,
+             owner: sync_owner
++        elsif folder['sync_type'] == 'sshfs'
++          if Vagrant.has_plugin?('vagrant-sshfs')
++            sshfs__reverse = !folder['sshfs']['reverse'].nil? ? folder['sshfs']['reverse'] : false
++            machine_id.vm.synced_folder "#{folder['source']}", "#{folder['target']}",
++            type: 'sshfs',
++            reverse: sshfs__reverse,
++            mount_options: folder['sshfs']['mount_options']
++          else
++            raise "\n\nPlugin vagrant-sshfs is required for SSHFS shares.\nPlease run 'vagrant plugin install vagrant-sshfs' to install the plugin, then try again.\n\n"
++          end
+         elsif provider['chosen_virtualizer'] == 'parallels'
+           machine_id.vm.synced_folder "#{folder['source']}", "#{folder['target']}",
+             id: "#{i}",
+@@ -270,6 +280,28 @@
+             :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate//#{i}", '1'
+           ]
+         end
++
++        # TODO: introduce option in config.yaml to choose this or not.
++        # Give VM 1/4 system memory & access to all cpu cores on the host.
++        host = RbConfig::CONFIG['host_os']
++
++        if host =~ /darwin/
++          cpus = `sysctl -n hw.ncpu`.to_i
++          # sysctl returns Bytes and we need to convert to MB
++          mem = `sysctl -n hw.memsize`.to_i / 1024 / 1024 / 4
++        elsif host =~ /linux/
++          cpus = `nproc`.to_i / 2
++          # meminfo shows KB and we need to convert to MB
++          mem = `grep 'MemTotal' /proc/meminfo | sed -e 's/MemTotal://' -e 's/ kB//'`.to_i / 1024 / 4
++        else # sorry Windows folks, I can't help you
++          cpus = 2
++          mem = 1024
++        end
++
++        virtualbox.customize ["modifyvm", :id, "--memory", mem]
++        virtualbox.customize ["modifyvm", :id, "--cpus", cpus]
++        # End TODO.
++
+       end
+     end
+ 
+@@ -354,6 +386,8 @@
+       'vagrant'
+ 
+     machine_id.vm.provision :shell,
++      :inline => "sed -i -r -e 's/^([# ]+)?(mesg n)/# \2/' /root/.profile"
++    machine_id.vm.provision :shell,
+       :inline => "sed -i -e 's/\r$//' /vagrant/puphpet/shell/*.sh"
+     machine_id.vm.provision 'shell' do |s|
+       s.path = 'puphpet/shell/initial-setup.sh'

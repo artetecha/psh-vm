@@ -1,0 +1,9 @@
+host ssh.bc.platform.sh
+	IdentityFile ~/.ssh/id_rsa
+	StrictHostKeyChecking no
+host git.bc.platform.sh
+	IdentityFile ~/.ssh/id_rsa
+	StrictHostKeyChecking no
+host github.com
+	IdentityFile ~/.ssh/id_rsa
+	StrictHostKeyChecking no

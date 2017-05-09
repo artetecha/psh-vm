@@ -20,10 +20,10 @@ vagrantfile:
                         update_guest_tools: 0
                 machines:
                     vflm_zbqt89sldc3q:
-                        id: psh.dev.artetecha.com
-                        hostname: psh.dev.artetecha.com
+                        id: psh.local.artetecha.com
+                        hostname: psh.local.artetecha.com
                         network:
-                            private_network: 192.168.230.10
+                            private_network: 192.168.44.44
                         memory: '2048'
                         cpus: '1'
         provision:

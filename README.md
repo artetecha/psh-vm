@@ -36,8 +36,7 @@ vagrant up
 ```bash
 $ vagrant ssh
 $ mkdir ~/profiles
-$ git clone git@github.com:artetecha/solas2-profile.git ~/profiles/solas2
-$ git clone git@github.com:artetecha/bcshop.git ~/profiles/bcshop
+$ git clone git@github.com:artetecha/a-drupal-profile.git ~/profiles/drupal-profile
 $ platform list
 $ platform list drupal
 $ platform help deploy
